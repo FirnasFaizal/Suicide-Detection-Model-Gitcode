@@ -85,38 +85,38 @@ Dataset Exploration
 > examples have significantly more words per post. Both distributions are skewed to the right.
 >
 > <p>
->   <img src="assets/output/images/sentiment_distribution_for_positive_examples.png" alt="sentiment_distribution_for_positive_examples.png" width="45%" />
->   <img src="assets/output/images/sentiment_distribution_for_negative_examples.png" alt="sentiment_distribution_for_negative_examples.png" width="45%" />
+>   <img src="images/sentiment_distribution_for_positive_examples.png" alt="sentiment_distribution_for_positive_examples.png" width="45%" />
+>   <img src="images/sentiment_distribution_for_negative_examples.png" alt="sentiment_distribution_for_negative_examples.png" width="45%" />
 > </p>
 >
 > The positive examples have an overwhelming ratio of negative sentiment. Note that having negative sentiment does not
 > necessarily mean that the text has suicidal thoughts.
 >
 > <p>
->   <img src="assets/output/images/most_common_30_words_for_positive_examples.png" alt="most_common_30_words_for_positive_examples.png" width="45%" />
->   <img src="assets/output/images/most_common_30_words_for_negative_examples.png" alt="most_common_30_words_for_negative_examples.png" width="45%" />
+>   <img src="images/most_common_30_words_for_positive_examples.png" alt="most_common_30_words_for_positive_examples.png" width="45%" />
+>   <img src="images/most_common_30_words_for_negative_examples.png" alt="most_common_30_words_for_negative_examples.png" width="45%" />
 > </p>
 >
 > Notice that the positive examples have suicide-related words, while the negative examples have miscellaneous words.
 >
 > <p>
->   <img src="assets/output/images/top_30_bigrams_for_positive_examples.png" alt="top_30_bigrams_for_positive_examples.png" width="45%" />
->   <img src="assets/output/images/top_30_bigrams_for_negative_examples.png" alt="top_30_bigrams_for_negative_examples.png" width="45%" />
+>   <img src="images/top_30_bigrams_for_positive_examples.png" alt="top_30_bigrams_for_positive_examples.png" width="45%" />
+>   <img src="images/top_30_bigrams_for_negative_examples.png" alt="top_30_bigrams_for_negative_examples.png" width="45%" />
 > </p>
 >
 > The most common bigram in the positive examples is **commit suicide** and **attempt suicide**.
 >
 > <p>
->   <img src="assets/output/images/top_30_trigrams_for_positive_examples.png" alt="top_30_trigrams_for_positive_examples.png" width="45%" />
->   <img src="assets/output/images/top_30_trigrams_for_negative_examples.png" alt="top_30_trigrams_for_negative_examples.png" width="45%" />
+>   <img src="images/top_30_trigrams_for_positive_examples.png" alt="top_30_trigrams_for_positive_examples.png" width="45%" />
+>   <img src="images/top_30_trigrams_for_negative_examples.png" alt="top_30_trigrams_for_negative_examples.png" width="45%" />
 > </p>
 >
 > The most common trigram in the positive examples is **borderline personality disorder**, which is very common among
 > depressed people.
 >
 > <p>
->   <img src="assets/output/images/word_cloud_positive.png" alt="word_cloud_positive.png" width="45%" />
->   <img src="assets/output/images/word_cloud_negative.png" alt="word_cloud_negative.png" width="45%" />
+>   <img src="images/word_cloud_positive.png" alt="word_cloud_positive.png" width="45%" />
+>   <img src="images/word_cloud_negative.png" alt="word_cloud_negative.png" width="45%" />
 > </p>
 >
 > Another representation for the top **N** words; where the left figure denotes positive examples, and the right figure
