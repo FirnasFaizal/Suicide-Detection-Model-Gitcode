@@ -1,7 +1,5 @@
 Creating a Suicide Text Classification Model Augmented with a Pre-trained Transformer
 ==============================
-This is a submission of **final paper** for the **CIS737** course.
-
 It contains the code necessary to implement a pre-trained transformer model to predict whether a text infers suicidal
 thoughts or not.
 
@@ -13,8 +11,8 @@ has been used, which contains a total of 232 thousand instances of nearly perfec
 Collaborators 🥇
 ------------
 
-* Tariq Sha'ban
-* Hamzeh Hailat
+* Muhammed Firnas Faizal
+* Ansh Mohan Srivastava
 
 Getting Started
 ------------
