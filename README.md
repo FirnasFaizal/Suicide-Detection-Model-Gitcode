@@ -1,4 +1,4 @@
-Creating a Suicide Text Classification Model Augmented with a Pre-trained Transformer
+Suicidal Thought Detection using Pre-Trained transformer model
 ==============================
 It contains the code necessary to implement a pre-trained transformer model to predict whether a text infers suicidal
 thoughts or not.
@@ -18,7 +18,7 @@ Getting Started
 ------------
 Clone the project from GitHub
 
-`$ git clone https://github.com/tariqshaban/suicide-detection.git`
+``
 
 No further configuration is required.
 
