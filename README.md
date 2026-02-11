@@ -18,7 +18,7 @@ Getting Started
 ------------
 Clone the project from GitHub
 
-``
+`https://github.com/FirnasFaizal/Suicide-Detection-Model-Gitcode.git`
 
 No further configuration is required.
 
