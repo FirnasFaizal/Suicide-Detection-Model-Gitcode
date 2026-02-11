@@ -142,12 +142,12 @@ Findings
 
 > ### Model Performance
 >
-> ![loss_history.png](assets/output/images/loss_history.png)
+> ![loss_history.png](images/loss_history.png)
 >
 > The lowest loss achieved during the training process was at the first epoch (0.0850). Such a result indicates that the
 > pre-trained initial weights were near-optimal; or that the hyperparameters should be further tuned.
 >
-> ![confusion_matrix.png](assets/output/images/confusion_matrix.png)
+> ![confusion_matrix.png](images/confusion_matrix.png)
 >
 > The model has a relatively higher error rate in discriminating texts that are not suicidal but perceived as one.
 >
