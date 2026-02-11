@@ -77,8 +77,8 @@ Dataset Exploration
 > **Note**: The suicidal classes as positive labels, while the non-suicidal classes as negative labels
 
 > <p>
->   <img src="assets/output/images/word_length_distribution_for_positive_examples.png" alt="word_length_distribution_for_positive_examples.png" width="45%" />
->   <img src="assets/output/images/word_length_distribution_for_negative_examples.png" alt="word_length_distribution_for_negative_examples.png" width="45%" />
+>   <img src="images/word_length_distribution_for_positive_examples.png" alt="word_length_distribution_for_positive_examples.png" width="45%" />
+>   <img src="images/word_length_distribution_for_negative_examples.png" alt="word_length_distribution_for_negative_examples.png" width="45%" />
 > </p>
 >
 > While comparing the word length distribution for each post with respect to the negative examples, the positive
