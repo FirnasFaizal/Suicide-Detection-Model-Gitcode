@@ -1,0 +1,9 @@
+fastapi==0.115.12
+uvicorn[standard]==0.30.6
+python-multipart==0.0.6
+transformers==4.28.0
+tensorflow==2.15.1
+keras<3
+python-dotenv==1.0.0
+openai>=1.68.0
+pydantic==2.5.0
