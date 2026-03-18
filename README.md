@@ -1,166 +1,118 @@
-Suicidal Thought Detection using Pre-Trained transformer model
-==============================
-It contains the code necessary to implement a pre-trained transformer model to predict whether a text infers suicidal
-thoughts or not.
+# MindSafe
 
-The dataset from the [Suicide and Depression Detection](https://www.kaggle.com/datasets/nikhileswarkomati/suicide-watch)
-has been used, which contains a total of 232 thousand instances of nearly perfectly balanced classes (50% non-suicidal,
-50% suicidal).
+MindSafe is a suicide-risk support application with a split FastAPI + React architecture.
 
+- The pretrained ML model is the only authority for automated suicide-risk detection.
+- An external LLM provider is used only for empathetic conversational responses.
+- If the pretrained model is unavailable, the app switches to a transparent support-only mode and does not produce a suicide-risk verdict.
+- MindSafe is not a substitute for professional mental health care, diagnosis, or emergency services.
 
-Collaborators 🥇
-------------
+## Architecture
 
-* Muhammed Firnas Faizal
-* Ansh Mohan Srivastava
+- `backend/` - FastAPI API, model loading, LLM integration, safety response shaping
+- `frontend/` - React + Vite client with chat UI, screening state, and crisis resources
+- `model/` - pretrained classifier assets loaded by the backend
 
-Getting Started
-------------
-Clone the project from GitHub
+Legacy files such as `app.py` and `simple_app.py` are not the primary application path.
 
-`https://github.com/FirnasFaizal/Suicide-Detection-Model-Gitcode.git`
+## Setup
 
-No further configuration is required.
+### 1. Install dependencies
 
-
-Usage
-------------
-
-* Navigate to the `defining constants` section and specify the following hyperparameters:
-    * Sampling fraction, set to 1
-    * Validation ratio, set to 0.01
-    * Test ratio, set to 0.005
-    * Batch size, set to 2 (Due to computational limitation)
-    * Number of epochs, set to 300
-    * Early stopping value, set to 30
-    * Early stopping delta value, set to 0.001
-
-The following methods should be invoked to build and evaluate the model:
-
-``` python
-# Fetches the distilbert-base-uncased tokenizer
-tokenizer = get_tokenizer()
-
-# Ready the dataset for training
-tokenized_dataset, test_dataset = prime_dataset(tokenizer=tokenizer)
-
-# Trains the model
-model = train_model(tokenizer=tokenizer, tokenized_dataset=tokenized_dataset, test_dataset=test_dataset)
+```bash
+./install.sh
 ```
 
-``` python
-# Returns a pipeline from the trained model; based on the MODEL_OUTPUTD.
-trained_pipeline = get_trained_pipeline()
+### 2. Configure environment variables
+
+Backend example in `backend/.env.example`:
+
+```bash
+LLM_API_KEY=your_key_here
+LLM_MODEL=speakleash/bielik-11b-v2.6-instruct
+LLM_BASE_URL=https://integrate.api.nvidia.com/v1
+LLM_PROVIDER=nvidia-integrate
+ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+MODEL_DIR=../model
+PORT=8000
 ```
 
-``` python
-# Predict a text whether it is suicidal or not
-text = 'A sample text.'
-trained_pipeline(text, truncation=True, max_length=4096)
+Frontend example in `frontend/.env.example`:
+
+```bash
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
-The following computational resources were used for training the model:
+Create local files:
 
-|         | Resource                       |
-|:-------:|--------------------------------|
-| **CPU** | Ryzen 5 3600                   |
-| **GPU** | Nvidia RTX 2060 6GB GDDR6 VRAM |
-| **RAM** | 24GB DDR4                      |
+```bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
 
-> **Note**: The training process on these resources took approximately less than four days. However, it should be noted
-> that the training time for each epoch fluctuated considerably; this is caused by having the resources used for other
-> tasks as well.
+Never commit real API keys.
 
-Dataset Exploration
-------------
+The classifier artifacts in `model/` were exported from a TensorFlow/Hugging Face setup that matches `transformers==4.28.0` and TensorFlow/Keras 2.x, which are pinned in the backend requirements.
 
-> **Note**: The suicidal classes as positive labels, while the non-suicidal classes as negative labels
+### 3. Run locally
 
-> <p>
->   <img src="images/word_length_distribution_for_positive_examples.png" alt="word_length_distribution_for_positive_examples.png" width="45%" />
->   <img src="images/word_length_distribution_for_negative_examples.png" alt="word_length_distribution_for_negative_examples.png" width="45%" />
-> </p>
->
-> While comparing the word length distribution for each post with respect to the negative examples, the positive
-> examples have significantly more words per post. Both distributions are skewed to the right.
->
-> <p>
->   <img src="images/sentiment_distribution_for_positive_examples.png" alt="sentiment_distribution_for_positive_examples.png" width="45%" />
->   <img src="images/sentiment_distribution_for_negative_examples.png" alt="sentiment_distribution_for_negative_examples.png" width="45%" />
-> </p>
->
-> The positive examples have an overwhelming ratio of negative sentiment. Note that having negative sentiment does not
-> necessarily mean that the text has suicidal thoughts.
->
-> <p>
->   <img src="images/most_common_30_words_for_positive_examples.png" alt="most_common_30_words_for_positive_examples.png" width="45%" />
->   <img src="images/most_common_30_words_for_negative_examples.png" alt="most_common_30_words_for_negative_examples.png" width="45%" />
-> </p>
->
-> Notice that the positive examples have suicide-related words, while the negative examples have miscellaneous words.
->
-> <p>
->   <img src="images/top_30_bigrams_for_positive_examples.png" alt="top_30_bigrams_for_positive_examples.png" width="45%" />
->   <img src="images/top_30_bigrams_for_negative_examples.png" alt="top_30_bigrams_for_negative_examples.png" width="45%" />
-> </p>
->
-> The most common bigram in the positive examples is **commit suicide** and **attempt suicide**.
->
-> <p>
->   <img src="images/top_30_trigrams_for_positive_examples.png" alt="top_30_trigrams_for_positive_examples.png" width="45%" />
->   <img src="images/top_30_trigrams_for_negative_examples.png" alt="top_30_trigrams_for_negative_examples.png" width="45%" />
-> </p>
->
-> The most common trigram in the positive examples is **borderline personality disorder**, which is very common among
-> depressed people.
->
-> <p>
->   <img src="images/word_cloud_positive.png" alt="word_cloud_positive.png" width="45%" />
->   <img src="images/word_cloud_negative.png" alt="word_cloud_negative.png" width="45%" />
-> </p>
->
-> Another representation for the top **N** words; where the left figure denotes positive examples, and the right figure
-> denotes negative examples.
+```bash
+./start.sh
+```
 
-Model Construction
-------------
+- Frontend: `http://localhost:5173`
+- Backend health: `http://localhost:8000/health`
 
-The `distilbert-base-uncased` pre-trained model has been used, the model weights and architecture can be accessed
-[here](https://huggingface.co/distilbert-base-uncased).
+## Full detection vs degraded mode
 
-`distilbert-base-uncased` is the result of this [paper](https://arxiv.org/abs/1910.01108); the authors have trained
-their model based on the same corpus as the original BERT model, which consisted of:
+### Full detection mode
 
-* English Wikipedia
-* Toronto Book Corpus
+The backend will perform real ML screening only when the actual model weights are present in `model/`.
 
-All the layers of the model were trainable (66,955,010 parameters).
+This repo tracks the model through Git LFS. If you only have pointer files, run:
 
+```bash
+git lfs install
+git lfs pull
+```
 
-Findings
-------------
+### Support-only degraded mode
 
-> ### Model Performance
->
-> ![loss_history.png](images/loss_history.png)
->
-> The lowest loss achieved during the training process was at the first epoch (0.0850). Such a result indicates that the
-> pre-trained initial weights were near-optimal; or that the hyperparameters should be further tuned.
->
-> ![confusion_matrix.png](images/confusion_matrix.png)
->
-> The model has a relatively higher error rate in discriminating texts that are not suicidal but perceived as one.
->
-> The testing dataset reported the following evaluation metric results:
-> * Accuracy: 90.94%
-> * Precision: 86.75%
-> * Recall: 96.93%
-> * F1 Score: 91.56%
+If the model is missing or fails to load:
 
-Notes
-------------
+- the backend still starts
+- `/health` reports `model_available: false`
+- `/analyze` returns `status: "model_unavailable"`
+- no label, confidence, or suicide-risk verdict is returned
+- The configured LLM may still provide empathetic conversation, or the backend uses built-in supportive fallback text
+- crisis and support resources remain visible in the UI
 
-> **Note**: Due to the computational limitations, we could not drop the weights of the pre-trained model; since by doing
-> so, the number of epochs required to converge will significantly increase.
+## API summary
 
---------
+- `GET /health` - service readiness, including `model_available`
+- `POST /predict` - ML detection only when the classifier is available
+- `POST /analyze` - screening + supportive response, or support-only mode when screening is unavailable
+
+### `POST /analyze` request shape
+
+```json
+{
+  "text": "I feel overwhelmed and do not know what to do.",
+  "conversation": [
+    { "role": "user", "content": "I have had a very hard week." },
+    { "role": "assistant", "content": "I am here with you. What feels hardest today?" }
+  ]
+}
+```
+
+- `text` is the latest user message and remains the only message screened by the pretrained classifier.
+- `conversation` is optional recent chat context used only to help the configured LLM write a more coherent empathetic reply.
+- The configured LLM still does not decide the risk classification.
+
+## Safety notes
+
+- High-risk detections trigger urgent, supportive guidance and crisis-support information
+- When the classifier is unavailable, the app explicitly says no automated screening took place
+- The configured LLM never replaces the classifier and never receives authority to make a risk verdict
+- The UI avoids presenting the system as a substitute for licensed care or emergency help
+- Recent conversation context is used only for empathy and continuity, not for classifier authority
