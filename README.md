@@ -105,14 +105,96 @@ If the model is missing or fails to load:
 }
 ```
 
-- `text` is the latest user message and remains the only message screened by the pretrained classifier.
-- `conversation` is optional recent chat context used only to help the configured LLM write a more coherent empathetic reply.
-- The configured LLM still does not decide the risk classification.
+Dataset Exploration
+------------
 
-## Safety notes
+> **Note**: The suicidal classes as positive labels, while the non-suicidal classes as negative labels
 
-- High-risk detections trigger urgent, supportive guidance and crisis-support information
-- When the classifier is unavailable, the app explicitly says no automated screening took place
-- The configured LLM never replaces the classifier and never receives authority to make a risk verdict
-- The UI avoids presenting the system as a substitute for licensed care or emergency help
-- Recent conversation context is used only for empathy and continuity, not for classifier authority
+> <p>
+>   <img src="images/word_length_distribution_for_positive_examples.png" alt="word_length_distribution_for_positive_examples.png" width="45%" />
+>   <img src="images/word_length_distribution_for_negative_examples.png" alt="word_length_distribution_for_negative_examples.png" width="45%" />
+> </p>
+>
+> While comparing the word length distribution for each post with respect to the negative examples, the positive
+> examples have significantly more words per post. Both distributions are skewed to the right.
+>
+> <p>
+>   <img src="images/sentiment_distribution_for_positive_examples.png" alt="sentiment_distribution_for_positive_examples.png" width="45%" />
+>   <img src="images/sentiment_distribution_for_negative_examples.png" alt="sentiment_distribution_for_negative_examples.png" width="45%" />
+> </p>
+>
+> The positive examples have an overwhelming ratio of negative sentiment. Note that having negative sentiment does not
+> necessarily mean that the text has suicidal thoughts.
+>
+> <p>
+>   <img src="images/most_common_30_words_for_positive_examples.png" alt="most_common_30_words_for_positive_examples.png" width="45%" />
+>   <img src="images/most_common_30_words_for_negative_examples.png" alt="most_common_30_words_for_negative_examples.png" width="45%" />
+> </p>
+>
+> Notice that the positive examples have suicide-related words, while the negative examples have miscellaneous words.
+>
+> <p>
+>   <img src="images/top_30_bigrams_for_positive_examples.png" alt="top_30_bigrams_for_positive_examples.png" width="45%" />
+>   <img src="images/top_30_bigrams_for_negative_examples.png" alt="top_30_bigrams_for_negative_examples.png" width="45%" />
+> </p>
+>
+> The most common bigram in the positive examples is **commit suicide** and **attempt suicide**.
+>
+> <p>
+>   <img src="images/top_30_trigrams_for_positive_examples.png" alt="top_30_trigrams_for_positive_examples.png" width="45%" />
+>   <img src="images/top_30_trigrams_for_negative_examples.png" alt="top_30_trigrams_for_negative_examples.png" width="45%" />
+> </p>
+>
+> The most common trigram in the positive examples is **borderline personality disorder**, which is very common among
+> depressed people.
+>
+> <p>
+>   <img src="images/word_cloud_positive.png" alt="word_cloud_positive.png" width="45%" />
+>   <img src="images/word_cloud_negative.png" alt="word_cloud_negative.png" width="45%" />
+> </p>
+>
+> Another representation for the top **N** words; where the left figure denotes positive examples, and the right figure
+> denotes negative examples.
+
+Model Construction
+------------
+
+The `distilbert-base-uncased` pre-trained model has been used, the model weights and architecture can be accessed
+[here](https://huggingface.co/distilbert-base-uncased).
+
+`distilbert-base-uncased` is the result of this [paper](https://arxiv.org/abs/1910.01108); the authors have trained
+their model based on the same corpus as the original BERT model, which consisted of:
+
+* English Wikipedia
+* Toronto Book Corpus
+
+All the layers of the model were trainable (66,955,010 parameters).
+
+
+Findings
+------------
+
+> ### Model Performance
+>
+> ![loss_history.png](images/loss_history.png)
+>
+> The lowest loss achieved during the training process was at the first epoch (0.0850). Such a result indicates that the
+> pre-trained initial weights were near-optimal; or that the hyperparameters should be further tuned.
+>
+> ![confusion_matrix.png](images/confusion_matrix.png)
+>
+> The model has a relatively higher error rate in discriminating texts that are not suicidal but perceived as one.
+>
+> The testing dataset reported the following evaluation metric results:
+> * Accuracy: 90.94%
+> * Precision: 86.75%
+> * Recall: 96.93%
+> * F1 Score: 91.56%
+
+Notes
+------------
+
+> **Note**: Due to the computational limitations, we could not drop the weights of the pre-trained model; since by doing
+> so, the number of epochs required to converge will significantly increase.
+
+--------
