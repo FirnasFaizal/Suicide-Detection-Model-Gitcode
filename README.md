@@ -59,18 +59,6 @@ text = 'A sample text.'
 trained_pipeline(text, truncation=True, max_length=4096)
 ```
 
-The following computational resources were used for training the model:
-
-|         | Resource                       |
-|:-------:|--------------------------------|
-| **CPU** | Ryzen 5 3600                   |
-| **GPU** | Nvidia RTX 2060 6GB GDDR6 VRAM |
-| **RAM** | 24GB DDR4                      |
-
-> **Note**: The training process on these resources took approximately less than four days. However, it should be noted
-> that the training time for each epoch fluctuated considerably; this is caused by having the resources used for other
-> tasks as well.
-
 Dataset Exploration
 ------------
 
